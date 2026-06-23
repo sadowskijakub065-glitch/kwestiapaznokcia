@@ -1,0 +1,27 @@
+backend:
+  name: github
+  repo: sadowskijakub065-glitch/kwestiapaznokcia
+  branch: main
+
+media_folder: "images" # Tutaj CMS będzie zapisywał zdjęcia
+public_folder: "/images"
+
+collections:
+  - name: "pages"
+    label: "Podstrony"
+    files:
+      - label: "Strona Główna"
+        name: "home"
+        file: "index.html"
+        fields:
+          - {label: "Tytuł strony", name: "title", widget: "string"}
+          - {label: "Szablon (Nie ruszaj)", name: "layout", widget: "hidden", default: "base.njk"}
+          # PONIŻEJ DEFINIUJEMY POLA DLA OPINII:
+          - label: "Opinie Klientek"
+            name: "opinie"
+            widget: "list"
+            fields:
+              - {label: "Gwiazdki (np. ⭐⭐⭐⭐⭐)", name: "gwiazdki", widget: "string"}
+              - {label: "Treść opinii", name: "tresc", widget: "text"}
+              - {label: "Imię autorki", name: "autor", widget: "string"}
+              - {label: "Źródło (np. Opinia z Google)", name: "zrodlo", widget: "string"}
