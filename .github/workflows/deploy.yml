@@ -6,6 +6,11 @@ on:
       - main
   workflow_dispatch:
 
+# NOWA REGUŁA: Automatyczne zabijanie zawieszonych procesów!
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 permissions:
   contents: read
   pages: write
