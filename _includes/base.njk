@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <meta name="keywords" content="salon kosmetyczny warszawa, stylizacja paznokci, manicure hybrydowy warszawa, pedicure kazubów, Kwestia Paznokcia salon, przedłużanie paznokci">
+    <meta name="author" content="Kwestia Paznokcia Salon Stylizacji Paznokci">
+    <meta property="og:title" content="Kwestia Paznokcia | Salon Stylizacji Paznokci w Warszawie">
+    <meta property="og:description" content="Zadbamy o Twoje dłonie i stopy w ciepłej, estetycznej atmosferze. Profesjonalny manicure, pedicure i przedłużanie. Umów wizytę!">
+    <meta property="og:image" content="LINK_DO_LADNEGO_ZDJECIA_SALONU.jpg"> 
+    <meta property="og:url" content="http://twojadomena.pl">
+    <meta property="og:type" content="website">
+    <meta name="description" content="Profesjonalny salon stylizacji paznokci. Zadbamy o Twoje dłonie i stopy w ciepłej i estetycznej atmosferze.">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">Kwestia Paznokcia</div>
+            
+            <button class="hamburger" id="hamburger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <nav id="mobile-nav">
+                <ul>
+                    <li><a href="/">Strona Główna</a></li>
+                    <li><a href="/o-nas/">O nas</a></li>
+                    <li><a href="/uslugi/">Usługi</a></li>
+                    <li><a href="/kontakt/">Kontakt</a></li>
+                </ul>
+            </nav>
+            <a href="https://booksy.com/pl-pl/7728_kwestia-paznokcia-bemowo_paznokcie_3_warszawa#ba_s=seo_DO_BOOKSY" target="_blank" class="btn" id="mobile-btn">Umów wizytę</a>
+        </div>
+    </header>
+
+    <main>
+        {{ content | safe }}
+    </main>
+
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <div class="logo">Kwestia Paznokcia</div>
+                <p>&copy; 2026 Salon Stylizacji Paznokci.<br>Wszelkie prawa zastrzeżone.</p>
+            </div>
+            
+            <div class="footer-hours">
+                <h3>Godziny otwarcia</h3>
+                <ul>
+                    <li><span>Poniedziałek - Piątek</span> <span>06:00 - 21:00</span></li>
+                    <li><span>Sobota</span> <span>07:00 - 16:00</span></li>
+                    <li><span>Niedziela</span> <span>Zamknięte</span></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileBtn = document.getElementById('mobile-btn');
+
+            if (hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', () => {
+                    hamburgerBtn.classList.toggle('active');
+                    if (mobileNav) mobileNav.classList.toggle('active');
+                    if (mobileBtn) mobileBtn.classList.toggle('active');
+                });
+            }
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.01 
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('reveal');
+                    } else {
+                        entry.target.classList.remove('reveal');
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.scroll-reveal');
+            revealElements.forEach(el => observer.observe(el));
+
+            const accordions = document.querySelectorAll('.accordion-item');
+            accordions.forEach(accordion => {
+                const header = accordion.querySelector('.accordion-header');
+                if(!header) return; // Zabezpieczenie dla stron bez akordeonu
+
+                header.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    accordions.forEach(otherAccordion => {
+                        if (otherAccordion !== accordion && otherAccordion.classList.contains('is-open')) {
+                            otherAccordion.classList.remove('is-open');
+                            setTimeout(() => { otherAccordion.removeAttribute('open'); }, 400);
+                        }
+                    });
+
+                    if (accordion.classList.contains('is-open')) {
+                         accordion.classList.remove('is-open');
+                         setTimeout(() => { accordion.removeAttribute('open'); }, 400); 
+                    } else {
+                         accordion.setAttribute('open', ''); 
+                         setTimeout(() => { 
+                             accordion.classList.add('is-open'); 
+                             setTimeout(() => {
+                                 const yOffset = -90; 
+                                 const y = accordion.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                                 window.scrollTo({top: y, behavior: 'smooth'});
+                             }, 300); 
+                         }, 10); 
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
